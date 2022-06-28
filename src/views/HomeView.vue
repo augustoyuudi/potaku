@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <h1>hello world</h1>
+    <router-link to="va-quiz">who is the va?</router-link>
   </main>
 </template>
