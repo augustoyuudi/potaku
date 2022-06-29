@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import VoiceActorQuizViewVue from '@/views/VoiceActorQuizView.vue'
+import VAQuizView from '@/views/VAQuizView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,7 +13,7 @@ const router = createRouter({
     {
       path: '/va-quiz',
       name: 'va-quiz',
-      component: VoiceActorQuizViewVue
+      component: VAQuizView
     }
   ]
 })
