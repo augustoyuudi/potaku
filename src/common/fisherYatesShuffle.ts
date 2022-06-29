@@ -1,5 +1,5 @@
 export default function fisherYatesShuffle(arr: number[]) {
-  let array = [...arr]
+  const array = [...arr]
   let i: number = array.length || 0
   let j = 0
 
