@@ -2,7 +2,7 @@
 import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
-import fisherYatesShuffle from '@/common/fisherYatesShuffle'
+import fisherYatesShuffle from '@/utils/fisherYatesShuffle'
 import type { Character, Media, PageInfo } from '@/types'
 
 const animeName = ref()
