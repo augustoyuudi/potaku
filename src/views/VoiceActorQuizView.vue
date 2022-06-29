@@ -3,49 +3,7 @@ import type { Ref } from 'vue'
 import { ref } from 'vue'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
 import fisherYatesShuffle from '@/common/fisherYatesShuffle'
-
-interface PageInfo {
-  total: number
-  currentPage: number
-  lastPage: number
-  hasNextPage: number
-  perPage: number
-}
-
-interface Media {
-  id: number
-  title: {
-    romaji: string
-    native: string
-  }
-  coverImage: {
-    medium: string
-    large: string
-    extraLarge: string
-  }
-}
-
-interface VoiceActor {
-  image: {
-    large: string
-  }
-  name: {
-    first: string
-    last: string
-  }
-}
-
-interface Character {
-  node: {
-    image: {
-      large: string
-    }
-    name: {
-      full: string
-    }
-  }
-  voiceActors: VoiceActor[]
-}
+import type { Character, Media, PageInfo } from '@/types'
 
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
