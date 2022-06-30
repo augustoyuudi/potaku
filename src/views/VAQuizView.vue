@@ -84,17 +84,17 @@ function validateVa() {
     </ul>
     <section v-if="character > -1" class="flex flex-wrap justify-center">
       <img class="mb-3" :src="characters[character].node.image.large" alt="">
-      <form class="w-full" action="va-quiz" @submit.prevent="validateVa">
+      <form class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
 
         <label
           v-for="va in voiceActors"
           :key="characters[va].node.name.full"
-          class="flex flex-wrap justify-center"
+          :class="{'border-2 border-indigo-800': va === selectedVA}"
           :for="characters[va].node.name.full"
         >
           <input
             :id="characters[va].node.name.full"
-            class="appearance-none"
+            class="hidden"
             type="radio"
             name="va"
             @change="selectVA(va)"
