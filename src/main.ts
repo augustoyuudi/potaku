@@ -1,8 +1,8 @@
 import { createApp, h, provide } from 'vue'
 import App from './App.vue'
 import router from './router'
-import 'uno.css'
 import '@unocss/reset/tailwind.css'
+import 'uno.css'
 import ApolloClient from './api/ApolloClient'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
