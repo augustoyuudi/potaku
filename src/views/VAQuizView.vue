@@ -85,23 +85,25 @@ function validateVa() {
     <section v-if="character > -1" class="flex flex-wrap justify-center">
       <img class="mb-3" :src="characters[character].node.image.large" alt="">
       <form class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
-
-        <label
-          v-for="va in voiceActors"
-          :key="characters[va].node.name.full"
-          :class="{'border-2 border-indigo-800': va === selectedVA}"
-          :for="characters[va].node.name.full"
-        >
-          <input
-            :id="characters[va].node.name.full"
-            class="hidden"
-            type="radio"
-            name="va"
-            @change="selectVA(va)"
+        <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
+          <legend class="hidden">Voice Actors</legend>
+          <label
+            v-for="va in voiceActors"
+            :key="characters[va].node.name.full"
+            :class="{'border-2 border-indigo-800': va === selectedVA}"
+            :for="characters[va].node.name.full"
           >
-          <img :src="characters[va].voiceActors[0].image.large" alt="">
-        </label>
-        <button type="submit" class="w-full">
+            <input
+              :id="characters[va].node.name.full"
+              class="hidden"
+              type="radio"
+              name="va"
+              @change="selectVA(va)"
+            >
+            <img :src="characters[va].voiceActors[0].image.large" alt="">
+          </label>
+        </fieldset>
+        <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-3 rounded uppercase text-sm">
           answer
         </button>
       </form>
