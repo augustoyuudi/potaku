@@ -8,6 +8,11 @@ import type { Character, Media, PageInfo } from '@/types'
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
 const currentPage: Ref<PageInfo | undefined> = ref()
+const characters: Ref<Character[]> = ref([])
+const character: Ref<number> = ref(-1)
+const voiceActors: Ref<number[]> = ref([])
+const selectedVA: Ref<number> = ref(-1)
+const hasSubmittedVA: Ref<boolean> = ref(false)
 
 async function searchAnime() {
   const variables = {
@@ -21,10 +26,6 @@ async function searchAnime() {
   animes.value = media
   currentPage.value = pageInfo
 }
-
-const characters: Ref<Character[]> = ref([])
-const character: Ref<number> = ref(-1)
-const voiceActors: Ref<number[]> = ref([])
 
 async function searchAnimeById(id: number) {
   const variables = {
@@ -46,17 +47,13 @@ function randomize() {
   voiceActors.value = fisherYatesShuffle(slicedArr)
 }
 
-const selectedVA: Ref<number> = ref(-1)
 function selectVA(voiceActor: number) {
   selectedVA.value = voiceActor
+  hasSubmittedVA.value = false
 }
 
 function validateVa() {
-  if (selectedVA.value === character.value) {
-    console.log('correto')
-    return
-  }
-  console.log('incorreto')
+  hasSubmittedVA.value = true
 }
 </script>
 
@@ -90,7 +87,11 @@ function validateVa() {
           <label
             v-for="va in voiceActors"
             :key="characters[va].node.name.full"
-            :class="{'border-2 border-indigo-800': va === selectedVA}"
+            :class="{
+              'border-6 border-indigo-800': !hasSubmittedVA && va === selectedVA,
+              'border-6 border-green-600': hasSubmittedVA && (va === selectedVA && character === selectedVA),
+              'border-6 border-rose-600': hasSubmittedVA && va === selectedVA && !(character === selectedVA)
+            }"
             :for="characters[va].node.name.full"
           >
             <input
