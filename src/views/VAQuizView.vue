@@ -107,7 +107,7 @@ function validateVa() {
               name="va"
               @change="selectVA(va)"
             >
-            <img :src="characters[va].voiceActors[0].image.large" alt="">
+            <img :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
           </label>
         </fieldset>
         <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-3 rounded uppercase text-sm">

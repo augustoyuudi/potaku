@@ -3,7 +3,6 @@ export default interface VoiceActor {
     large: string
   }
   name: {
-    first: string
-    last: string
+    full: string
   }
 }

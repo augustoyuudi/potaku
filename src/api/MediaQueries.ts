@@ -57,8 +57,7 @@ function queryMediaById(variables: queryVariables) {
             voiceActors (language: JAPANESE) {
               id
               name {
-                first
-                last
+                full
               }
               image {
                 large
