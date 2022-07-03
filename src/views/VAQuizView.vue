@@ -71,14 +71,13 @@ function validateVa() {
         type="text"
       >
     </form>
-    <ul v-show="!hasSelectedAnime" class="flex flex-col items-start">
+    <ul v-show="!hasSelectedAnime" class="flex flex-wrap justify-center gap-2">
       <li
         v-for="anime in animes"
         :key="anime.id"
-        class="flex items-center mb-2"
         @click="searchAnimeById(anime.id)"
       >
-        <img class="mr-2" :src="anime.coverImage.medium" :alt="anime.title.romaji">
+        <img :src="anime.coverImage.large" :alt="anime.title.romaji">
       </li>
     </ul>
     <section v-if="character > -1" class="flex flex-wrap justify-center">
