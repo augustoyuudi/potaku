@@ -79,7 +79,6 @@ function validateVa() {
         @click="searchAnimeById(anime.id)"
       >
         <img class="mr-2" :src="anime.coverImage.medium" :alt="anime.title.romaji">
-        <p>{{ anime.title.native }}</p>
       </li>
     </ul>
     <section v-if="character > -1" class="flex flex-wrap justify-center">
