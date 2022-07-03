@@ -7,6 +7,7 @@ import type { Character, Media, PageInfo } from '@/types'
 
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
+const hasSelectedAnime: Ref<boolean> = ref(false)
 const currentPage: Ref<PageInfo | undefined> = ref()
 const characters: Ref<Character[]> = ref([])
 const character: Ref<number> = ref(-1)
@@ -25,6 +26,7 @@ async function searchAnime() {
 
   animes.value = media
   currentPage.value = pageInfo
+  hasSelectedAnime.value = false
 }
 
 async function searchAnimeById(id: number) {
@@ -35,6 +37,7 @@ async function searchAnimeById(id: number) {
 
   const { data: { Media: { characters: { edges } } } } = await queryMediaById(variables)
   characters.value = edges
+  hasSelectedAnime.value = true
   randomize()
 }
 
@@ -68,7 +71,7 @@ function validateVa() {
         type="text"
       >
     </form>
-    <ul class="flex flex-col items-start">
+    <ul v-show="!hasSelectedAnime" class="flex flex-col items-start">
       <li
         v-for="anime in animes"
         :key="anime.id"
