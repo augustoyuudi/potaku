@@ -27,6 +27,11 @@ async function searchAnime() {
   animes.value = media
   currentPage.value = pageInfo
   hasSelectedAnime.value = false
+  characters.value = []
+  character.value = -1
+  voiceActors.value = []
+  selectedVA.value = -1
+  hasSubmittedVA.value = false
 }
 
 async function searchAnimeById(id: number) {
