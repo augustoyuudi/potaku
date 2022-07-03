@@ -86,7 +86,7 @@ function validateVa() {
       </li>
     </ul>
     <section v-if="character > -1" class="flex flex-wrap justify-center">
-      <img class="mb-3" :src="characters[character].node.image.large" alt="">
+      <img class="mb-3" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
       <form class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
         <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
           <legend class="hidden">Voice Actors</legend>
