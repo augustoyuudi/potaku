@@ -30,9 +30,7 @@ function queryPaginatedMedia(variables: queryVariables) {
             romaji
           }
           coverImage {
-            extraLarge
             large
-            medium
           }
         }
       }
