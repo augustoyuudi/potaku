@@ -28,7 +28,6 @@ function queryPaginatedMedia(variables: queryVariables) {
           id
           title {
             romaji
-            native
           }
           coverImage {
             extraLarge
