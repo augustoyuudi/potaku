@@ -67,13 +67,13 @@ function validateVa() {
 
 <template>
   <main>
-    <form class="mb-4" action="va-quiz" @submit.prevent="searchAnime">
-      <label class="mr-3" for="searchAnime">Search Anime</label>
+    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 h-9" action="va-quiz" @submit.prevent="searchAnime">
+      <label class="i-carbon-search text-purple-800" for="searchAnime"></label>
       <input
         id="searchAnime"
         v-model="animeName"
-        class="b b-black"
-        type="text"
+        class="w-full h-full outline-0 appearance-none"
+        type="search"
       >
     </form>
     <ul v-show="!hasSelectedAnime" class="flex flex-wrap justify-center gap-2">
