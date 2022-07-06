@@ -63,6 +63,22 @@ function selectVA(voiceActor: number) {
 function validateVa() {
   hasSubmittedVA.value = true
 }
+
+function validateSelectedVA(va: number) {
+  if (va !== selectedVA.value) {
+    return ''
+  }
+
+  if (!hasSubmittedVA.value) {
+    return 'border-6 border-indigo-800'
+  }
+
+  if (character.value === selectedVA.value) {
+    return 'border-6 border-green-600'
+  }
+
+  return 'border-6 border-rose-600'
+}
 </script>
 
 <template>
@@ -93,11 +109,9 @@ function validateVa() {
           <label
             v-for="va in voiceActors"
             :key="characters[va].node.name.full"
-            :class="{
-              'border-6 border-indigo-800': !hasSubmittedVA && va === selectedVA,
-              'border-6 border-green-600': hasSubmittedVA && (va === selectedVA && character === selectedVA),
-              'border-6 border-rose-600': hasSubmittedVA && va === selectedVA && !(character === selectedVA)
-            }"
+            :class="[
+              validateSelectedVA(va),
+            ]"
             :for="characters[va].node.name.full"
           >
             <input
