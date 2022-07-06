@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
 import fisherYatesShuffle from '@/utils/fisherYatesShuffle'
 import type { Character, Media, PageInfo } from '@/types'
 
+onMounted(() => {
+  window.addEventListener('keydown', shortcutListener)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', shortcutListener)
+})
+
+const animeSearch = ref()
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
 const hasSelectedAnime: Ref<boolean> = ref(false)
@@ -14,6 +23,12 @@ const character: Ref<number> = ref(-1)
 const voiceActors: Ref<number[]> = ref([])
 const selectedVA: Ref<number> = ref(-1)
 const hasSubmittedVA: Ref<boolean> = ref(false)
+
+function shortcutListener(e: KeyboardEvent) {
+  if (e.metaKey && e.key === 'k') {
+    animeSearch.value.focus()
+  }
+}
 
 async function searchAnime() {
   const variables = {
@@ -87,6 +102,7 @@ function validateSelectedVA(va: number) {
       <label class="i-carbon-search text-purple-800" for="searchAnime"></label>
       <input
         id="searchAnime"
+        ref="animeSearch"
         v-model="animeName"
         class="w-full h-full outline-0 appearance-none"
         type="search"
