@@ -98,8 +98,8 @@ function validateSelectedVA(va: number) {
 
 <template>
   <main>
-    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 h-9" action="va-quiz" @submit.prevent="searchAnime">
-      <label class="i-carbon-search text-purple-800" for="searchAnime"></label>
+    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 h-9 w-72" action="va-quiz" @submit.prevent="searchAnime">
+      <label class="i-carbon-search text-purple-800 text-lg" for="searchAnime"></label>
       <input
         id="searchAnime"
         ref="animeSearch"
@@ -107,6 +107,10 @@ function validateSelectedVA(va: number) {
         class="w-full h-full outline-0 appearance-none"
         type="search"
       >
+      <span class="flex items-center justify-center text-purple-800 bg-amber-400 px-2 py-0.5 rounded-md uppercase">
+        <span class="i-carbon-mac-command text-sm"></span>
+        k
+      </span>
     </form>
     <ul v-show="!hasSelectedAnime" class="flex flex-wrap justify-center gap-2">
       <li
