@@ -15,7 +15,7 @@ interface queryVariables {
 
 function queryPaginatedMedia(variables: queryVariables) {
   const query = gql`
-    query getAnimes ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
+    query getPaginatedMedi ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
       Page (page: $page, perPage: $perPage) {
         pageInfo {
           total
@@ -41,7 +41,7 @@ function queryPaginatedMedia(variables: queryVariables) {
 
 function queryMediaById(variables: queryVariables) {
   const query = gql`
-    query getAnime ($id: Int) {
+    query getMediaById ($id: Int) {
       Media (id: $id) {
         id
         characters (sort: ROLE, page: 1, perPage: 10) {
