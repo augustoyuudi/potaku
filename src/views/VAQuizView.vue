@@ -112,7 +112,7 @@ function validateSelectedVA(va: number) {
         k
       </span>
     </form>
-    <ul v-show="!hasSelectedAnime" class="flex flex-wrap justify-center gap-2">
+    <ul v-show="!hasSelectedAnime && animes.length" class="flex flex-wrap justify-center gap-2">
       <li
         v-for="anime in animes"
         :key="anime.id"
