@@ -97,9 +97,9 @@ function validateSelectedVA(va: number) {
 </script>
 
 <template>
-  <main class="flex flex-wrap items-center p-2">
-    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 h-9 w-72" action="va-quiz" @submit.prevent="searchAnime">
-      <label class="i-carbon-search text-purple-800 text-lg" for="searchAnime"></label>
+  <main class="flex flex-wrap justify-center p-2">
+    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md p-2" action="va-quiz" @submit.prevent="searchAnime">
+      <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
       <input
         id="searchAnime"
         ref="animeSearch"
