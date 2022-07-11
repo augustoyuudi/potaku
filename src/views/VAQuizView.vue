@@ -121,33 +121,31 @@ function validateSelectedVA(va: number) {
         <img :src="anime.coverImage.large" :alt="anime.title.romaji">
       </li>
     </ul>
-    <section v-if="character > -1" class="flex flex-wrap justify-center">
-      <img class="mb-3" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
-      <form class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
-        <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
-          <legend class="hidden">Voice Actors</legend>
-          <label
-            v-for="va in voiceActors"
-            :key="characters[va].node.name.full"
-            :class="[
-              validateSelectedVA(va),
-            ]"
-            :for="characters[va].node.name.full"
+    <form v-if="character > -1" class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
+      <img :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
+      <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
+        <legend class="hidden">Voice Actors</legend>
+        <label
+          v-for="va in voiceActors"
+          :key="characters[va].node.name.full"
+          :class="[
+            validateSelectedVA(va),
+          ]"
+          :for="characters[va].node.name.full"
+        >
+          <input
+            :id="characters[va].node.name.full"
+            class="hidden"
+            type="radio"
+            name="va"
+            @change="selectVA(va)"
           >
-            <input
-              :id="characters[va].node.name.full"
-              class="hidden"
-              type="radio"
-              name="va"
-              @change="selectVA(va)"
-            >
-            <img :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
-          </label>
-        </fieldset>
-        <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-3 rounded uppercase text-sm">
-          answer
-        </button>
-      </form>
-    </section>
+          <img :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
+        </label>
+      </fieldset>
+      <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-3 rounded uppercase text-sm">
+        answer
+      </button>
+    </form>
   </main>
 </template>
