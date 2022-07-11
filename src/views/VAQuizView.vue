@@ -98,7 +98,7 @@ function validateSelectedVA(va: number) {
 
 <template>
   <main class="flex flex-wrap justify-center p-2">
-    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md p-2" action="va-quiz" @submit.prevent="searchAnime">
+    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 py-1 h-10" action="va-quiz" @submit.prevent="searchAnime">
       <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
       <input
         id="searchAnime"
@@ -118,11 +118,11 @@ function validateSelectedVA(va: number) {
         :key="anime.id"
         @click="searchAnimeById(anime.id)"
       >
-        <img :src="anime.coverImage.large" :alt="anime.title.romaji">
+        <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
       </li>
     </ul>
     <form v-if="character > -1" class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
-      <img :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
+      <img class="w-44" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
       <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
         <legend class="hidden">Voice Actors</legend>
         <label
@@ -140,12 +140,13 @@ function validateSelectedVA(va: number) {
             name="va"
             @change="selectVA(va)"
           >
-          <img :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
+          <img class="w-32" :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
         </label>
       </fieldset>
-      <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-3 rounded uppercase text-sm">
-        answer
+      <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-2 rounded uppercase text-sm">
+        Answer
       </button>
+      <button type="button" class="b border-2 b-purple-800 text-purple-800 rounded px-5 py-2" @click="randomize">Randomize</button>
     </form>
   </main>
 </template>
