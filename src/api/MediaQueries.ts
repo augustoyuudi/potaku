@@ -1,19 +1,12 @@
 import gql from 'graphql-tag'
 import { useApolloClient, provideApolloClient } from '@vue/apollo-composable'
 import ApolloClient from './ApolloClient'
+import type { QueryVariables } from '@/types';
 
 provideApolloClient(ApolloClient)
 const { client } = useApolloClient()
 
-interface queryVariables {
-  id?: number
-  search?: string
-  page?: number
-  perPage?: number
-  type?: string
-}
-
-function queryPaginatedMedia(variables: queryVariables) {
+function queryPaginatedMedia(variables: QueryVariables) {
   const query = gql`
     query getPaginatedMedi ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
       Page (page: $page, perPage: $perPage) {
@@ -39,7 +32,7 @@ function queryPaginatedMedia(variables: queryVariables) {
   return client.query({ query, variables })
 }
 
-function queryMediaById(variables: queryVariables) {
+function queryMediaById(variables: QueryVariables) {
   const query = gql`
     query getMediaById ($id: Int) {
       Media (id: $id) {
