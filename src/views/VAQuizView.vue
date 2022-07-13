@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
 import { ref, onMounted, onUnmounted } from 'vue'
+import debounce from 'lodash.debounce'
+import type { Character, Media, PageInfo } from '@/types'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
 import fisherYatesShuffle from '@/utils/fisherYatesShuffle'
-import type { Character, Media, PageInfo } from '@/types'
 
 onMounted(() => {
   window.addEventListener('keydown', shortcutListener)
@@ -29,6 +30,8 @@ function shortcutListener(e: KeyboardEvent) {
     animeSearch.value.focus()
   }
 }
+
+const debouncedSearchAnime = debounce(searchAnime, 500)
 
 async function searchAnime() {
   const variables = {
@@ -98,7 +101,7 @@ function validateSelectedVA(va: number) {
 
 <template>
   <main class="flex flex-wrap justify-center p-2">
-    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 py-1 h-10 w-full max-w-xs" action="va-quiz" @submit.prevent="searchAnime">
+    <form class="flex items-center gap-x-2 mb-4 b b-amber-400 rounded-md px-2 py-1 h-10 w-full max-w-xs" action="va-quiz">
       <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
       <input
         id="searchAnime"
@@ -106,6 +109,7 @@ function validateSelectedVA(va: number) {
         v-model="animeName"
         class="w-full h-full outline-0 appearance-none"
         type="search"
+        @input.prevent="debouncedSearchAnime"
       >
       <span class="flex items-center justify-center text-purple-800 bg-amber-400 px-2 py-0.5 rounded-md uppercase">
         <span class="i-carbon-mac-command text-sm"></span>

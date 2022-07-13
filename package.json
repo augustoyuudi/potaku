@@ -14,10 +14,12 @@
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
+    "@types/lodash.debounce": "^4.0.7",
     "@unocss/reset": "^0.41.0",
     "@vue/apollo-composable": "^4.0.0-alpha.18",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",
+    "lodash.debounce": "^4.0.8",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
   },
