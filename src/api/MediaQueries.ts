@@ -8,7 +8,7 @@ const { client } = useApolloClient()
 
 function queryPaginatedMedia(variables: QueryVariables) {
   const query = gql`
-    query getPaginatedMedi ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
+    query getPaginatedMedia ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
       Page (page: $page, perPage: $perPage) {
         pageInfo {
           total
