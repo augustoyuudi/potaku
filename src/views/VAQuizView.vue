@@ -104,14 +104,14 @@ function validateSelectedVA(va: number) {
 </script>
 
 <template>
-  <main class="flex flex-wrap justify-center p-2">
+  <main class="flex flex-col items-center justify-center p-2">
     <div class="flex items-center gap-x-2 mb-4">
       <button
         v-if="hasSelectedAnime"
         class="i-carbon-arrow-left text-xl text-purple-800"
         @click="resetSelectedAnime"
       ></button>
-      <form class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10 w-full max-w-xs" action="va-quiz">
+      <form class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10" action="va-quiz">
         <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
         <input
           id="searchAnime"
