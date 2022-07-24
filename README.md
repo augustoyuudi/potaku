@@ -27,8 +27,6 @@ Fetching resources from [AniList](https://anilist.gitbook.io/anilist-apiv2-docs/
 
 ## Acknowledgement
 
-> in alphabet order
-
 - [Vue.js](https://vuejs.org/)
 - [UnoCSS](https://github.com/unocss/unocss)
 - [Vue Apollo](https://apollo.vuejs.org/)
