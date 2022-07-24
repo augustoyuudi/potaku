@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import debounce from 'lodash.debounce'
 import type { Character, Media, PageInfo } from '@/types'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
@@ -18,7 +18,19 @@ const animeSearch = ref()
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
 const hasSelectedAnime: Ref<boolean> = ref(false)
-const currentPage: Ref<PageInfo | undefined> = ref()
+const page: Ref<PageInfo | undefined> = ref()
+const currentPage = computed(() => {
+  return page.value?.currentPage
+})
+const nextPage = computed(() => {
+  return (page.value?.currentPage || 0) + 1
+})
+const previousPage = computed(() => {
+  return (page.value?.currentPage || 1) > 1 ? (page.value?.currentPage || 0) - 1 : 1;
+})
+const lastPage = computed(() => {
+  return page.value?.lastPage || 1
+})
 const characters: Ref<Character[]> = ref([])
 const character: Ref<number> = ref(-1)
 const voiceActors: Ref<number[]> = ref([])
@@ -31,19 +43,19 @@ function shortcutListener(e: KeyboardEvent) {
   }
 }
 
-const debouncedSearchAnime = debounce(searchAnime, 500)
+const debouncedSearchAnime = debounce(() => searchAnime(1), 500)
 
-async function searchAnime() {
+async function searchAnime(searchPage = 1) {
   const variables = {
     search: animeName.value,
-    page: 1,
+    page: searchPage,
     perPage: 10,
     type: 'ANIME',
   }
   const { data: { Page: { media, pageInfo } } } = await queryPaginatedMedia(variables)
 
   animes.value = media
-  currentPage.value = pageInfo
+  page.value = pageInfo
   resetSelectedAnime()
 }
 
@@ -105,7 +117,7 @@ function validateSelectedVA(va: number) {
 
 <template>
   <main class="flex flex-col items-center justify-center p-2">
-    <div class="flex items-center gap-x-2 mb-4">
+    <section class="flex items-center gap-x-2 mb-4">
       <button
         v-if="hasSelectedAnime"
         class="i-carbon-arrow-left text-xl text-purple-800"
@@ -127,16 +139,35 @@ function validateSelectedVA(va: number) {
           k
         </span>
       </form>
-    </div>
-    <ul v-show="!hasSelectedAnime && animes.length" class="flex flex-wrap justify-center gap-2">
-      <li
-        v-for="anime in animes"
-        :key="anime.id"
-        @click="searchAnimeById(anime.id)"
-      >
-        <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
-      </li>
-    </ul>
+    </section>
+    <section v-show="!hasSelectedAnime && animes.length">
+      <ul class="flex flex-wrap justify-center gap-2">
+        <li
+          v-for="anime in animes"
+          :key="anime.id"
+          @click="searchAnimeById(anime.id)"
+        >
+          <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
+        </li>
+      </ul>
+      <ol class="flex items-end justify-center gap-3 cursor-pointer">
+        <li v-if="page && page.currentPage > 1" class="text-purple-800 bg-amber-400 px-2 py-1">
+          <button @click="searchAnime(previousPage)">{{ previousPage }}</button>
+        </li>
+        <li class="text-purple-800 bg-amber-500 px-2 py-1 rounded-sm">
+          <button>{{ currentPage }}</button>
+        </li>
+        <li v-if="page?.hasNextPage" class="text-purple-800 bg-amber-400 px-2 py-1 rounded-sm">
+          <button @click="searchAnime(nextPage)">{{ nextPage }}</button>
+        </li>
+        <li v-if="page?.lastPage" class="text-purple-800">
+          <p>...</p>
+        </li>
+        <li v-if="page?.lastPage" class="text-purple-800 bg-amber-400 px-2 py-1 rounded-sm">
+          <button @click="searchAnime(lastPage)">{{ lastPage }}</button>
+        </li>
+      </ol>
+    </section>
     <form v-if="character > -1" class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
       <img class="w-44" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
       <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
