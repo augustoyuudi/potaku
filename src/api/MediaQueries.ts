@@ -1,10 +1,6 @@
 import gql from 'graphql-tag'
-import { useApolloClient, provideApolloClient } from '@vue/apollo-composable'
-import ApolloClient from './ApolloClient'
+import client from './ApolloClient'
 import type { QueryVariables } from '@/types';
-
-provideApolloClient(ApolloClient)
-const { client } = useApolloClient()
 
 function queryPaginatedMedia(variables: QueryVariables) {
   const query = gql`
