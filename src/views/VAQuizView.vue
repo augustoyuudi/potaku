@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import debounce from 'lodash.debounce'
+import BasePagination from '@/components/BasePagination.vue'
 import type { Character, Media, PageInfo } from '@/types'
 import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
 import fisherYatesShuffle from '@/utils/fisherYatesShuffle'
@@ -18,18 +19,9 @@ const animeSearch = ref()
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
 const hasSelectedAnime: Ref<boolean> = ref(false)
-const page: Ref<PageInfo | undefined> = ref()
-const currentPage = computed(() => {
-  return page.value?.currentPage
-})
-const nextPage = computed(() => {
-  return (page.value?.currentPage || 0) + 1
-})
-const previousPage = computed(() => {
-  return (page.value?.currentPage || 1) > 1 ? (page.value?.currentPage || 0) - 1 : 1;
-})
-const lastPage = computed(() => {
-  return page.value?.lastPage || 1
+const page: Ref<PageInfo> = ref({
+  currentPage: 1,
+  perPage: 10
 })
 const characters: Ref<Character[]> = ref([])
 const character: Ref<number> = ref(-1)
@@ -142,7 +134,7 @@ function validateSelectedVA(va: number) {
       </form>
     </section>
     <section v-show="!hasSelectedAnime && animes.length">
-      <ul class="flex flex-wrap justify-center gap-2">
+      <ul class="flex flex-wrap justify-center gap-2 mb-2">
         <li
           v-for="anime in animes"
           :key="anime.id"
@@ -151,23 +143,7 @@ function validateSelectedVA(va: number) {
           <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
         </li>
       </ul>
-      <ol class="flex items-end justify-center gap-3 cursor-pointer">
-        <li v-if="page && page.currentPage > 1" class="text-purple-800 bg-amber-400 px-2 py-1">
-          <button @click="searchAnime(previousPage)">{{ previousPage }}</button>
-        </li>
-        <li class="text-purple-800 bg-amber-500 px-2 py-1 rounded-sm">
-          <button>{{ currentPage }}</button>
-        </li>
-        <li v-if="page?.hasNextPage" class="text-purple-800 bg-amber-400 px-2 py-1 rounded-sm">
-          <button @click="searchAnime(nextPage)">{{ nextPage }}</button>
-        </li>
-        <li v-if="page?.lastPage" class="text-purple-800">
-          <p>...</p>
-        </li>
-        <li v-if="page?.lastPage" class="text-purple-800 bg-amber-400 px-2 py-1 rounded-sm">
-          <button @click="searchAnime(lastPage)">{{ lastPage }}</button>
-        </li>
-      </ol>
+      <BasePagination :page="page" @change="searchAnime" />
     </section>
     <form v-if="character > -1" class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
       <img class="w-44" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
