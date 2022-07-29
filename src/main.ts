@@ -1,17 +1,10 @@
-import { createApp, h, provide } from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import '@unocss/reset/tailwind.css'
 import 'uno.css'
-import ApolloClient from './api/ApolloClient'
-import { DefaultApolloClient } from '@vue/apollo-composable'
 
-const app = createApp({
-  setup() {
-    provide(DefaultApolloClient, ApolloClient)
-  },
-  render: () => h(App)
-})
+const app = createApp(App)
 
 app.use(router)
 
