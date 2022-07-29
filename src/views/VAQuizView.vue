@@ -131,6 +131,7 @@ function validateSelectedVA(va: number) {
           v-model="animeName"
           class="w-full h-full outline-0 appearance-none"
           type="search"
+          data-testid="search-anime"
           @input.prevent="debouncedSearchAnime"
           @keydown.enter.prevent
         >
