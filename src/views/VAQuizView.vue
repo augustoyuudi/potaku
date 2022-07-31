@@ -145,8 +145,18 @@ function validateSelectedVA(va: number) {
       </ul>
       <BasePagination :page="page" @change="searchAnime" />
     </section>
-    <form v-if="character > -1" class="w-full flex flex-wrap justify-center gap-2" action="va-quiz" @submit.prevent="validateVa">
-      <img class="w-44" :src="characters[character].node.image.large" :alt="characters[character].node.name.full">
+    <form
+      v-if="character > -1"
+      action="va-quiz"
+      class="w-full flex flex-wrap justify-center gap-2"
+      @submit.prevent="validateVa"
+    >
+      <img
+        :src="characters[character].node.image.large"
+        :alt="characters[character].node.name.full"
+        class="w-44"
+        data-testid="quiz-character"
+      >
       <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
         <legend class="hidden">Voice Actors</legend>
         <label
@@ -156,6 +166,7 @@ function validateSelectedVA(va: number) {
             validateSelectedVA(va),
           ]"
           :for="characters[va].node.name.full"
+          data-testid="quiz-va"
         >
           <input
             :id="characters[va].node.name.full"
@@ -164,7 +175,11 @@ function validateSelectedVA(va: number) {
             name="va"
             @change="selectVA(va)"
           >
-          <img class="w-32" :src="characters[va].voiceActors[0].image.large" :alt="characters[va].voiceActors[0].name.full">
+          <img
+            :src="characters[va].voiceActors[0].image.large"
+            :alt="characters[va].voiceActors[0].name.full"
+            class="w-32"
+          >
         </label>
       </fieldset>
       <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-2 rounded uppercase text-sm">

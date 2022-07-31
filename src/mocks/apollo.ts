@@ -1,6 +1,6 @@
 import { setupServer } from 'msw/node'
 import { graphql } from 'msw'
-import { createPaginatedMedia, createPageInfo, createMedia } from './MediaQueries'
+import { createPaginatedMedia, createPageInfo, createMedia, createMediaById } from './MediaQueries'
 
 const handlers = [
   graphql.query('getPaginatedMedia', (req, res, ctx) => {
@@ -19,6 +19,12 @@ const handlers = [
 
     return res(
       ctx.data(createPaginatedMedia(page, perPage))
+    )
+  }),
+
+  graphql.query('getMediaById', (req, res, ctx) => {
+    return res(
+      ctx.data(createMediaById())
     )
   })
 ]

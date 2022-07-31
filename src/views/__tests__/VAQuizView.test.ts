@@ -36,4 +36,21 @@ describe('VAQuizView', () => {
       expect(screen.queryByAltText('ONE PIECE')).toBeNull()
     })
   })
+
+  it('should render quiz correctly', async () => {
+    render(sut)
+
+    await fireEvent.update(screen.getByTestId('search-anime'), 'one piece')
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByAltText('ONE PIECE'))
+    })
+    await waitFor(() => {
+      const quizVA = screen.getAllByTestId('quiz-va')
+      expect(screen.getByTestId('quiz-character')).toBeTruthy()
+      expect(quizVA).toBeTruthy()
+      expect(quizVA.length).toBe(5)
+      expect(screen.getByText('Answer')).toBeTruthy()
+      expect(screen.getByText('Randomize')).toBeTruthy()
+    })
+  })
 })
