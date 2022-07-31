@@ -29,3 +29,18 @@ Fetching resources from [AniList](https://anilist.gitbook.io/anilist-apiv2-docs/
 - [Vue Apollo](https://apollo.vuejs.org/)
 - [Vite](https://vitejs.dev/)
 - [Netlify](https://www.netlify.com/)
+
+## Tasks
+
+### In progress
+- [x] Quiz state unit tests
+
+### To do
+- [ ] Sugest animes in search page
+- [ ] Implement loading state on API calls
+- [ ] Implement empty state on API calls
+- [ ] Dynamic search focus shortcut by device
+- [ ] Increase character random range
+- [ ] Upload favicon
+- [ ] Implement E2E tests
+- [ ] Create/Upload favicon
