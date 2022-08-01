@@ -65,6 +65,23 @@ describe('VAQuizView', () => {
       const quizVA = screen.getAllByTestId('quiz-va')
       await fireEvent.click(quizVA[0])
       expect(quizVA[0].classList.contains('border-indigo-800')).toBeTruthy()
+      await fireEvent.click(quizVA[1])
+      expect(quizVA[0].classList.contains('border-indigo-800')).toBeFalsy()
+      expect(quizVA[1].classList.contains('border-indigo-800')).toBeTruthy()
+    })
+  })
+
+  it('should validate answer', async () => {
+    render(sut)
+
+    await fireEvent.update(screen.getByTestId('search-anime'), 'one piece')
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByAltText('ONE PIECE'))
+    })
+    await waitFor(async () => {
+      const quizVA = screen.getAllByTestId('quiz-va')
+      await fireEvent.click(quizVA[0])
+      expect(quizVA[0].classList.contains('border-indigo-800')).toBeTruthy()
     })
   })
 })
