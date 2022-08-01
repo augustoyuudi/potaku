@@ -53,4 +53,18 @@ describe('VAQuizView', () => {
       expect(screen.getByText('Randomize')).toBeTruthy()
     })
   })
+
+  it('should change selected va border color', async () => {
+    render(sut)
+
+    await fireEvent.update(screen.getByTestId('search-anime'), 'one piece')
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByAltText('ONE PIECE'))
+    })
+    await waitFor(async () => {
+      const quizVA = screen.getAllByTestId('quiz-va')
+      await fireEvent.click(quizVA[0])
+      expect(quizVA[0].classList.contains('border-indigo-800')).toBeTruthy()
+    })
+  })
 })
