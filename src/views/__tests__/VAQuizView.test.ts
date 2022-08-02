@@ -13,6 +13,13 @@ describe('VAQuizView', () => {
     expect(screen.getByTestId('search-anime')).toBeTruthy()
   })
 
+  it('should focus search input with shortcut', async () => {
+    render(sut)
+
+    await fireEvent.keyDown(window, { key: 'k', metaKey: true })
+    expect(screen.getByTestId('search-anime') === document.activeElement).toBeTruthy()
+  })
+
   it('should render anime list and pagination', async () => {
     render(sut)
 
