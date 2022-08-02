@@ -103,4 +103,19 @@ describe('VAQuizView', () => {
       expect(hasChangedVas).toBeTruthy()
     })
   })
+
+  it('should return to anime selection', async () => {
+    render(sut)
+
+    await fireEvent.update(screen.getByTestId('search-anime'), 'one piece')
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByAltText('ONE PIECE'))
+    })
+    await waitFor(async () => {
+      await fireEvent.click(screen.getByTestId('reset-anime'))
+      expect(screen.getByAltText('ONE PIECE')).toBeTruthy()
+      expect(screen.getByAltText('ONE PIECE (Movie)')).toBeTruthy()
+      expect(screen.getByText('1')).toBeTruthy()
+    })
+  })
 })

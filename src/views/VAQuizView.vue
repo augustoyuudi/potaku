@@ -113,6 +113,7 @@ function validateSelectedVA(va: number) {
       <button
         v-if="hasSelectedAnime"
         class="i-carbon-arrow-left text-xl text-purple-800"
+        data-testid="reset-anime"
         @click="resetSelectedAnime"
       ></button>
       <form class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10" action="va-quiz">
