@@ -71,7 +71,7 @@ describe('VAQuizView', () => {
     })
   })
 
-  it('should validate answer', async () => {
+  it('should validate va answer', async () => {
     render(sut)
 
     await fireEvent.update(screen.getByTestId('search-anime'), 'one piece')
@@ -81,7 +81,10 @@ describe('VAQuizView', () => {
     await waitFor(async () => {
       const quizVA = screen.getAllByTestId('quiz-va')
       await fireEvent.click(quizVA[0])
-      expect(quizVA[0].classList.contains('border-indigo-800')).toBeTruthy()
+      await fireEvent.click(screen.getByText('Answer'))
+      const hasCorrectAnswer = quizVA.some(va => va.classList.contains('border-green-600'))
+      const hasIncorrectAnswer = quizVA.some(va => va.classList.contains('border-rose-600'))
+      expect(hasCorrectAnswer || hasIncorrectAnswer).toBeTruthy()
     })
   })
 })
