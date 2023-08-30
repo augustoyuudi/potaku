@@ -1,0 +1,20 @@
+name: Pull Request
+
+on: push
+
+jobs:
+  danger:
+    runs-on: ubuntu-latest
+    if: github.repository == 'delivery-much/cacetinho'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Run pnpm install on Root
+        run: pnpm install
+        working-directory: .
+      - name: Danger
+        run: pnpm danger ci --use-github-checks --failOnErrors
+        env:
+          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
