@@ -11,14 +11,15 @@ const formatOutdatedPackages = (outdatedPackages) => {
     return `| ${key} | ${current} | ${wanted} | ${latest} |`;
   });
 
-  return `
-  <details>
-    <summary>Outdated Packages</summary>
-
-    | Package | Current | Wanted | Latest |
-    | ------- | ------- | ------ | ------ |
-    ${content.join("\n")}
-  </details>`;
+  return [
+    "<details>",
+    "<summary>Outdated Packages</summary>",
+    "\n",
+    "| Package | Current | Wanted | Latest |",
+    "| ------- | ------- | ------ | ------ |",
+    ...content,
+    "</details>"
+  ].join("\n");
 };
 
 const execAsPromise = command => {
