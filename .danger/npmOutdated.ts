@@ -44,14 +44,7 @@ async function npmOutdated() {
     const packagesTable = formatOutdatedPackages(outdatedPackages);
 
     warn(`You have ${Object.keys(outdatedPackages).length} outdated packages`);
-    console.log(packagesTable);
-
-    // markdown(`
-    //   <details>
-    //     <summary>Outdated Packages</summary>
-    //     ${packagesTable}
-    //   </details>
-    // `);
+    markdown(packagesTable);
   } catch (err) {
     fail(`npm audit plugin error: ${err.message}`);
   }
