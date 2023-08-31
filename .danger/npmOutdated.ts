@@ -16,9 +16,9 @@ const formatOutdatedPackages = (outdatedPackages) => {
     '<summary>Outdated Packages</summary>',
     '| Package | Current | Wanted | latest |',
     '| --- | --- | --- | --- |',
-    content.join('\n'),
+    ...content,
     '</details>'
-  ].join('\n');
+  ].join('\n\n');
 };
 
 const execAsPromise = command => {
