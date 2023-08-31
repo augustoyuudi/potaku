@@ -5,18 +5,13 @@ const formatOutdatedPackages = (outdatedPackages) => {
     return;
   }
 
-  const headers = [
-    "| Package | Current | Wanted | latest |",
-    "|---------|---------|--------|--------|"
-  ];
-
   const content = Object.entries(outdatedPackages).map(([key, val]) => {
     const { current, wanted, latest } = val;
 
-    return `| ${key} | ${current} | ${wanted} | ${latest} |`;
+    return `<p>| ${key} | ${current} | ${wanted} | ${latest} |</p>`;
   });
 
-  return headers.concat(content).join("\n");
+  return `<details>\n<summary>Outdated Packages</summary>\n<p>"| Package | Current | Wanted | latest |"</p>\n<p>"|---------|---------|--------|--------|"</p>\n${content.join("\n")}\n</details>`;
 };
 
 const execAsPromise = command => {
@@ -49,12 +44,14 @@ async function npmOutdated() {
     const packagesTable = formatOutdatedPackages(outdatedPackages);
 
     warn(`You have ${Object.keys(outdatedPackages).length} outdated packages`);
-    markdown(`
-      <details>
-        <summary>Outdated Packages</summary>
-        ${packagesTable}
-      </details>
-    `);
+    console.log(packagesTable);
+
+    // markdown(`
+    //   <details>
+    //     <summary>Outdated Packages</summary>
+    //     ${packagesTable}
+    //   </details>
+    // `);
   } catch (err) {
     fail(`npm audit plugin error: ${err.message}`);
   }
