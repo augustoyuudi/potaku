@@ -5,11 +5,6 @@ const formatOutdatedPackages = (outdatedPackages) => {
     return;
   }
 
-  const headers = [
-    "| Package | Current | Wanted | Latest |",
-    "|---------|---------|--------|--------|"
-  ];
-
   const content = Object.entries(outdatedPackages).map(([key, val]) => {
     const { current, wanted, latest } = val;
 
@@ -19,7 +14,10 @@ const formatOutdatedPackages = (outdatedPackages) => {
   return `
   <details>
     <summary>Outdated Packages</summary>
-${headers.concat(content).join("\n")}
+
+    | Package | Current | Wanted | Latest |
+    | ------- | ------- | ------ | ------ |
+    ${content.join("\n")}
   </details>`;
 };
 
