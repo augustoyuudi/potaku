@@ -8,10 +8,17 @@ const formatOutdatedPackages = (outdatedPackages) => {
   const content = Object.entries(outdatedPackages).map(([key, val]) => {
     const { current, wanted, latest } = val;
 
-    return `<p>| ${key} | ${current} | ${wanted} | ${latest} |</p>`;
+    return `| ${key} | ${current} | ${wanted} | ${latest} |`;
   });
 
-  return `<details>\n<summary>Outdated Packages</summary>\n<p>| Package | Current | Wanted | latest |</p>\n<p>|---------|---------|--------|--------|</p>\n${content.join("\n")}\n</details>`;
+  return `
+    <details>
+      <summary>Outdated Packages</summary>
+      | Package | Current | Wanted | latest |
+      | --- | --- | --- | --- |
+      ${content.join("\n")}
+    </details>
+  `;
 };
 
 const execAsPromise = command => {
