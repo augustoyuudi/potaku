@@ -11,7 +11,7 @@ const formatOutdatedPackages = (outdatedPackages) => {
     return `<p>| ${key} | ${current} | ${wanted} | ${latest} |</p>`;
   });
 
-  return `<details>\n<summary>Outdated Packages</summary>\n<p>"| Package | Current | Wanted | latest |"</p>\n<p>"|---------|---------|--------|--------|"</p>\n${content.join("\n")}\n</details>`;
+  return `<details>\n<summary>Outdated Packages</summary>\n<p>| Package | Current | Wanted | latest |</p>\n<p>|---------|---------|--------|--------|</p>\n${content.join("\n")}\n</details>`;
 };
 
 const execAsPromise = command => {
