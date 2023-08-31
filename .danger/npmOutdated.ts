@@ -5,21 +5,23 @@ const formatOutdatedPackages = (outdatedPackages) => {
     return;
   }
 
+  const headers = [
+    "| Package | Current | Wanted | Latest |",
+    "|---------|---------|--------|--------|"
+  ];
+
   const content = Object.entries(outdatedPackages).map(([key, val]) => {
     const { current, wanted, latest } = val;
 
     return `| ${key} | ${current} | ${wanted} | ${latest} |`;
   });
 
-  return [
-    "<details>",
-    "<summary>Outdated Packages</summary>",
-    "| Package | Current | Wanted | Latest |",
-    "|---------|---------|--------|--------|",
-    ...content,
-    "</details>"
-  ].join("\n");
-}
+  return `
+  <details>
+    <summary>Outdated Packages</summary>
+${headers.concat(content).join("\n")}
+  </details>`;
+};
 
 const execAsPromise = command => {
   return new Promise((resolve, reject) => {
