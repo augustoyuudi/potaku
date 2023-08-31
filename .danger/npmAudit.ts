@@ -43,7 +43,7 @@ async function npmAudit() {
   try {
     const audit = await execAsPromise(auditCommand);
     const severityLine = getSummary(audit);
-    message(severityLine);
+    warn(severityLine);
   } catch (err) {
     fail(`npm audit plugin error: ${err.message}`);
   }
