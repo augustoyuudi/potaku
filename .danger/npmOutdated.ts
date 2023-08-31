@@ -16,7 +16,7 @@ const formatOutdatedPackages = (outdatedPackages) => {
     '<summary>Outdated Packages</summary>',
     '| Package | Current | Wanted | latest |',
     '| --- | --- | --- | --- |',
-    ...content,
+    content.join('\n'),
     '</details>'
   ].join('\n');
 };
