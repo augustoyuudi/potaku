@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.ts",
   "scripts": {
     "dev": "tsx server.ts"
   },
@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.20",
+    "foundation": "workspace:^",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"

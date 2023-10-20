@@ -17,6 +17,9 @@ importers:
       '@types/express':
         specifier: ^4.17.20
         version: 4.17.20
+      foundation:
+        specifier: workspace:^
+        version: link:../foundation
       tsx:
         specifier: ^3.14.0
         version: 3.14.0
@@ -26,6 +29,15 @@ importers:
       vitest:
         specifier: ^0.34.6
         version: 0.34.6(jsdom@22.1.0)
+
+  foundation:
+    devDependencies:
+      foundation:
+        specifier: workspace:^
+        version: 'link:'
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
 
   frontend:
     dependencies:
