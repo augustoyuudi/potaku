@@ -2,6 +2,7 @@
   "name": "potaku",
   "scripts": {
     "dev": "pnpm --stream -r run dev",
-    "dev:backend": "pnpm run --filter backend dev"
+    "dev:frontend": "pnpm run --filter potaku-frontend dev",
+    "dev:backend": "pnpm run --filter potaku-backend dev"
   }
 }

@@ -1,15 +1,16 @@
 {
-  "name": "backend",
+  "name": "potaku-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx server.ts"
+    "dev": "tsx watch server.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@urql/core": "^4.1.4",
     "express": "^4.18.2"
   },
   "devDependencies": {
