@@ -1,11 +1,19 @@
-import MediaRepository from '../../core/repository/MediaRepository';
-import gqlClient from '../database/urql';
+import express from 'express';
+import getPaginatedMediaUC from 'core/usecase/getPaginatedMedia';
 
-export class MediaController {
-  getPaginatedMedia(req, res) {
-    const { query } = req;
+const router = express.Router();
 
-    const mediaRepository = new MediaRepository();
-    return mediaRepository.getPaginatedMedia(gqlClient, query);
-  }
-}
+router.get('/media', async (req, res) => {
+  req.body = {
+    page: 1,
+    perPage: 5,
+    search: 'one piece',
+    type: 'ANIME'
+  };
+
+  const media = await getPaginatedMediaUC(req.body);
+
+  res.send(media);
+});
+
+export default router;
