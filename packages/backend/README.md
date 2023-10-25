@@ -1,4 +1,3 @@
-- list animes with search string
 - get one character randomized
 - get 5 voice actors randomized
 
