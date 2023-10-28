@@ -1,3 +1,5 @@
-export type Workspace = {
-  name: string
+import fisherYatesShuffle from './fisherYatesShuffle';
+
+export {
+  fisherYatesShuffle,
 }
