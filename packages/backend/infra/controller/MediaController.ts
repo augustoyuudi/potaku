@@ -1,7 +1,8 @@
 import express from 'express';
-import getPaginatedMediaUC from 'core/usecase/getPaginatedMedia';
+import getPaginatedMedia from 'core/usecase/getPaginatedMedia';
 import getMediaById from 'core/usecase/getMediaById';
 import getRandomizedMediaCharacter from 'core/usecase/getRandomizedMediaCharacter';
+import getMediaVoiceActors from 'core/usecase/getMediaVoiceActors';
 
 const router = express.Router();
 
@@ -15,7 +16,7 @@ router.get('/media/search', async (req, res) => {
     };
   }
 
-  const media = await getPaginatedMediaUC(req.body);
+  const media = await getPaginatedMedia(req.body);
 
   res.send(media);
 });
@@ -35,7 +36,7 @@ router.get('/media', async (req, res) => {
   res.send(media);
 });
 
-router.get('/media/character/random', async (req, res) => {
+router.get('/media/character/randomized', async (req, res) => {
   if (!req.body) {
     req.body = {
       id: 21,
@@ -49,6 +50,19 @@ router.get('/media/character/random', async (req, res) => {
   const character = await getRandomizedMediaCharacter(req.body);
 
   res.send(character);
+});
+
+router.get('/media/voice-actors', async (req, res) => {
+  if (!req.body) {
+    req.body = {
+      id: 21,
+      type: 'ANIME'
+    };
+  }
+
+  const voiceActors = await getMediaVoiceActors(req.body);
+
+  res.send(voiceActors);
 });
 
 export default router;
