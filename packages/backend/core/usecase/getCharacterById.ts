@@ -1,7 +1,5 @@
 import CharacterRepository from '../repository/CharacterRepository';
 
-export default async function getCharacterById(query) {
-  const character = await CharacterRepository.getCharacterById(query);
-
-  return character;
+export default function getCharacterById(query) {
+  return CharacterRepository.getCharacterById(query);
 }
