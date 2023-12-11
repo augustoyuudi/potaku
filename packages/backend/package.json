@@ -11,11 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "@urql/core": "^4.1.4",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "foundation": "workspace:^"
   },
   "devDependencies": {
     "@types/express": "^4.17.20",
-    "foundation": "workspace:^",
     "tsx": "^3.14.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.6"

@@ -16,13 +16,13 @@ importers:
       express:
         specifier: ^4.18.2
         version: 4.18.2
+      foundation:
+        specifier: workspace:^
+        version: link:../foundation
     devDependencies:
       '@types/express':
         specifier: ^4.17.20
         version: 4.17.20
-      foundation:
-        specifier: workspace:^
-        version: link:../foundation
       tsx:
         specifier: ^3.14.0
         version: 3.14.0
@@ -120,6 +120,9 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.17.0
         version: 9.17.0(eslint@8.51.0)
+      foundation:
+        specifier: workspace:^
+        version: link:../foundation
       jsdom:
         specifier: ^22.1.0
         version: 22.1.0
