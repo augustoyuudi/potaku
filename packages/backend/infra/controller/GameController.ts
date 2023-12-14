@@ -3,7 +3,7 @@ import createCharacterAndVoiceActorQuiz from '../../core/usecase/createCharacter
 
 const router = express.Router();
 
-router.get('/game/quiz/character-va', async (req, res) => {
+router.post('/game/quiz/character-va', async (req, res) => {
   req.body = {
     mediaId: 21,
     sort: ['ROLE'],
