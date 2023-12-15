@@ -1,112 +1,3 @@
-<script setup lang="ts">
-import type { Ref } from 'vue'
-import { ref, onMounted, onUnmounted } from 'vue'
-import debounce from 'lodash.debounce'
-import BasePagination from '@/components/BasePagination.vue'
-import type { Character, Media, PageInfo } from '@/types'
-import { queryMediaById, queryPaginatedMedia } from '@/api/MediaQueries'
-import fisherYatesShuffle from '@/utils/fisherYatesShuffle'
-
-onMounted(() => {
-  window.addEventListener('keydown', shortcutListener)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', shortcutListener)
-})
-
-const animeSearch = ref()
-const animeName = ref()
-const animes: Ref<Media[]> = ref([])
-const hasSelectedAnime: Ref<boolean> = ref(false)
-const page: Ref<PageInfo> = ref({
-  currentPage: 1,
-  perPage: 10
-})
-const characters: Ref<Character[]> = ref([])
-const character: Ref<number> = ref(-1)
-const voiceActors: Ref<number[]> = ref([])
-const selectedVA: Ref<number> = ref(-1)
-const hasSubmittedVA: Ref<boolean> = ref(false)
-
-function shortcutListener(e: KeyboardEvent) {
-  if (e.metaKey && e.key === 'k') {
-    animeSearch.value.focus()
-  }
-}
-
-const debouncedSearchAnime = debounce(() => searchAnime(1), 500)
-
-async function searchAnime(searchPage = 1) {
-  const variables = {
-    search: animeName.value,
-    page: searchPage,
-    perPage: 10,
-    type: 'ANIME',
-  }
-  const { data: { Page: { media, pageInfo } } } = await queryPaginatedMedia(variables)
-
-  animes.value = media
-  page.value = pageInfo
-  resetSelectedAnime()
-}
-
-function resetSelectedAnime() {
-  hasSelectedAnime.value = false
-  characters.value = []
-  character.value = -1
-  voiceActors.value = []
-  selectedVA.value = -1
-  hasSubmittedVA.value = false
-}
-
-async function searchAnimeById(id: number) {
-  const variables = {
-    id,
-    type: 'ANIME',
-  }
-
-  const { data: { Media: { characters: { edges } } } } = await queryMediaById(variables)
-  characters.value = edges
-  hasSelectedAnime.value = true
-  randomize()
-}
-
-function randomize() {
-  character.value = Math.floor(Math.random() * (10 - 0) + 0)
-  const vas = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-  vas.splice(character.value, 1)
-  const tempArr = fisherYatesShuffle(vas)
-  const slicedArr = [...tempArr.slice(0, 4), character.value]
-  voiceActors.value = fisherYatesShuffle(slicedArr)
-}
-
-function selectVA(voiceActor: number) {
-  selectedVA.value = voiceActor
-  hasSubmittedVA.value = false
-}
-
-function validateVa() {
-  hasSubmittedVA.value = true
-}
-
-function validateSelectedVA(va: number) {
-  if (va !== selectedVA.value) {
-    return ''
-  }
-
-  if (!hasSubmittedVA.value) {
-    return 'border-6 border-indigo-800'
-  }
-
-  if (character.value === selectedVA.value) {
-    return 'border-6 border-green-600'
-  }
-
-  return 'border-6 border-rose-600'
-}
-</script>
-
 <template>
   <main class="flex flex-col items-center justify-center p-2">
     <section class="flex items-center gap-x-2 mb-4">
@@ -139,7 +30,7 @@ function validateSelectedVA(va: number) {
         <li
           v-for="anime in animes"
           :key="anime.id"
-          @click="searchAnimeById(anime.id)"
+          @click="getQuizGameData(anime.id)"
         >
           <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
         </li>
@@ -147,14 +38,14 @@ function validateSelectedVA(va: number) {
       <BasePagination :page="page" @change="searchAnime" />
     </section>
     <form
-      v-if="character > -1"
+      v-if="character"
       action="va-quiz"
       class="w-full flex flex-wrap justify-center gap-2"
       @submit.prevent="validateVa"
     >
       <img
-        :src="characters[character].node.image.large"
-        :alt="characters[character].node.name.full"
+        :src="character.node.image.large"
+        :alt="character.node.name.full"
         class="w-44"
         data-testid="quiz-character"
       >
@@ -162,23 +53,23 @@ function validateSelectedVA(va: number) {
         <legend class="hidden">Voice Actors</legend>
         <label
           v-for="va in voiceActors"
-          :key="characters[va].node.name.full"
+          :key="va.name.full"
           :class="[
-            validateSelectedVA(va),
+            validateSelectedVA(va.id),
           ]"
-          :for="characters[va].node.name.full"
+          :for="va.name.full"
           data-testid="quiz-va"
         >
           <input
-            :id="characters[va].node.name.full"
+            :id="va.name.full"
             class="hidden"
             type="radio"
             name="va"
-            @change="selectVA(va)"
+            @change="selectVA(va.id)"
           >
           <img
-            :src="characters[va].voiceActors[0].image.large"
-            :alt="characters[va].voiceActors[0].name.full"
+            :src="va.image.large"
+            :alt="va.name.full"
             class="w-32"
           >
         </label>
@@ -186,7 +77,112 @@ function validateSelectedVA(va: number) {
       <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-2 rounded uppercase text-sm">
         Answer
       </button>
-      <button type="button" class="b border-2 b-purple-800 text-purple-800 rounded px-5 py-2" @click="randomize">Randomize</button>
+      <!-- <button type="button" class="b border-2 b-purple-800 text-purple-800 rounded px-5 py-2" @click="randomize">Randomize</button> -->
     </form>
   </main>
 </template>
+
+<script setup lang="ts">
+import type { Ref } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import debounce from 'lodash.debounce'
+import BasePagination from '@/components/BasePagination.vue'
+import type { Character, Media, PageInfo } from '@/types'
+import { queryPaginatedMedia } from '@/api/MediaQueries'
+
+onMounted(() => {
+  window.addEventListener('keydown', shortcutListener)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', shortcutListener)
+})
+
+const animeSearch = ref()
+const animeName = ref()
+const animes: Ref<Media[]> = ref([])
+const page: Ref<PageInfo> = ref({
+  currentPage: 1,
+  perPage: 10
+})
+const character: Ref<Character | null> = ref(null)
+const voiceActors: Ref = ref(null)
+const selectedVA: Ref<number> = ref(-1)
+const isAnswerCorrect: Ref<boolean | null> = ref(null)
+const hasSelectedAnime = computed(() => {
+  return character.value && voiceActors.value
+})
+
+function shortcutListener(e: KeyboardEvent) {
+  if (e.metaKey && e.key === 'k') {
+    animeSearch.value.focus()
+  }
+}
+
+const debouncedSearchAnime = debounce(() => searchAnime(1), 500)
+
+async function searchAnime(searchPage = 1) {
+  const variables = {
+    search: animeName.value,
+    page: searchPage,
+    perPage: 10,
+    type: 'ANIME',
+  }
+  const { data: { Page: { media, pageInfo } } } = await queryPaginatedMedia(variables)
+
+  animes.value = media
+  page.value = pageInfo
+  resetSelectedAnime()
+}
+
+function resetSelectedAnime() {
+  character.value = null
+  voiceActors.value = []
+  selectedVA.value = -1
+}
+
+async function getQuizGameData(id: number) {
+  const data = await fetch('http://localhost:3000/game/quiz/character-va', {
+    method: 'POST',
+    body: JSON.stringify({
+      mediaId: id,
+      sort: ['ROLE'],
+      page: 1,
+      perPage: 10,
+      type: 'ANIME'
+    })
+  })
+
+  const game = await data.json()
+
+  character.value = game.character
+  voiceActors.value = game.voiceActors
+}
+
+function selectVA(voiceActor: number) {
+  selectedVA.value = voiceActor
+  isAnswerCorrect.value = null
+}
+
+function validateVa() {
+  isAnswerCorrect.value = selectedVA.value === character.value?.voiceActors[0].id
+}
+
+function validateSelectedVA(va: number) {
+  if (selectedVA.value !== va) {
+    return
+  }
+
+  if (isAnswerCorrect.value === null) {
+    return 'border-6 border-indigo-800'
+  }
+
+  if (isAnswerCorrect.value === true) {
+    return 'border-6 border-green-600'
+  }
+
+  if (isAnswerCorrect.value === false) {
+    return 'border-6 border-rose-600'
+  }
+}
+</script>
