@@ -7,14 +7,12 @@ export default async function validateCharacterByVoiceActor({ voiceActorId, char
     page: 1,
     sort: 'POPULARITY_DESC'
   });
+
   const correctVoiceActor = Character.media.edges[0].voiceActors[0].id;
 
   if (voiceActorId === correctVoiceActor) {
-    console.log('Equal');
     return true;
   }
-
-  console.log(`Not equal. Expected: ${correctVoiceActor}. Received: ${voiceActorId}`);
 
   return false;
 }
