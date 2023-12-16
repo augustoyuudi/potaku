@@ -4,13 +4,7 @@ import createCharacterAndVoiceActorQuiz from '../../core/usecase/createCharacter
 const router = express.Router();
 
 router.post('/game/quiz/character-va', async (req, res) => {
-  req.body = {
-    mediaId: 21,
-    sort: ['ROLE'],
-    page: 1,
-    perPage: 10,
-    type: 'ANIME'
-  };
+  req.headers['content-type'] = 'application/json';
 
   const data = await createCharacterAndVoiceActorQuiz(req.body);
 

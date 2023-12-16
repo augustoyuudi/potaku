@@ -154,6 +154,9 @@ async function getQuizGameData(id?: number) {
 
   const data = await fetch('http://localhost:3000/game/quiz/character-va', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
       mediaId: id,
       sort: ['ROLE'],
