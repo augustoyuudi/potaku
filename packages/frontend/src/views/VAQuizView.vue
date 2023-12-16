@@ -30,7 +30,7 @@
         <li
           v-for="anime in animes"
           :key="anime.id"
-          @click="getQuizGameData(anime.id)"
+          @click="setupGame(anime.id)"
         >
           <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
         </li>
@@ -77,7 +77,7 @@
       <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-2 rounded uppercase text-sm">
         Answer
       </button>
-      <!-- <button type="button" class="b border-2 b-purple-800 text-purple-800 rounded px-5 py-2" @click="randomize">Randomize</button> -->
+      <button type="button" class="b border-2 b-purple-800 text-purple-800 rounded px-5 py-2" @click="getQuizGameData()">Randomize</button>
     </form>
   </main>
 </template>
@@ -101,6 +101,7 @@ onUnmounted(() => {
 const animeSearch = ref()
 const animeName = ref()
 const animes: Ref<Media[]> = ref([])
+const selectedAnime = ref()
 const page: Ref<PageInfo> = ref({
   currentPage: 1,
   perPage: 10
@@ -141,7 +142,16 @@ function resetSelectedAnime() {
   selectedVA.value = -1
 }
 
-async function getQuizGameData(id: number) {
+function setupGame(animeId: number) {
+  selectedAnime.value = animeId
+  getQuizGameData()
+}
+
+async function getQuizGameData(id?: number) {
+  if (id === undefined || id === null) {
+    id = selectedAnime.value
+  }
+
   const data = await fetch('http://localhost:3000/game/quiz/character-va', {
     method: 'POST',
     body: JSON.stringify({
