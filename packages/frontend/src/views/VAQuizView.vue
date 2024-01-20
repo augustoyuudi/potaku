@@ -16,6 +16,7 @@
           class="w-full h-full outline-0 appearance-none"
           type="search"
           data-testid="search-anime"
+          placeholder="eg: one piece"
           @input.prevent="debouncedSearchAnime"
           @keydown.enter.prevent
         >
@@ -30,6 +31,7 @@
         <li
           v-for="anime in animes"
           :key="anime.id"
+          class="cursor-pointer"
           @click="setupGame(anime.id)"
         >
           <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
@@ -43,12 +45,19 @@
       class="w-full flex flex-wrap justify-center gap-2"
       @submit.prevent="validateVa"
     >
-      <img
-        :src="character.node.image.large"
-        :alt="character.node.name.full"
-        class="w-44"
-        data-testid="quiz-character"
-      >
+      <figure class="mb-4">
+        <img
+          :src="character.node.image.large"
+          :alt="character.node.name.full"
+          class="w-44"
+          data-testid="quiz-character"
+        >
+        <figcaption
+          class="italic text-center"
+        >
+          {{ character.node.name.full }}
+        </figcaption>
+      </figure>
       <fieldset class="flex flex-wrap justify-center gap-2 basis-full">
         <legend class="hidden">Voice Actors</legend>
         <label
@@ -57,6 +66,7 @@
           :class="[
             validateSelectedVA(va.id),
           ]"
+          class="cursor-pointer"
           :for="va.name.full"
           data-testid="quiz-va"
         >
@@ -67,11 +77,16 @@
             name="va"
             @change="selectVA(va.id)"
           >
-          <img
-            :src="va.image.large"
-            :alt="va.name.full"
-            class="w-32"
-          >
+          <figure>
+            <img
+              :src="va.image.large"
+              :alt="va.name.full"
+              class="w-32"
+            >
+            <figcaption class="italic text-center">
+              {{ va.name.full }}
+            </figcaption>
+          </figure>
         </label>
       </fieldset>
       <button type="submit" class="bg-amber-400 text-purple-800 font-semibold px-5 py-2 rounded uppercase text-sm">
