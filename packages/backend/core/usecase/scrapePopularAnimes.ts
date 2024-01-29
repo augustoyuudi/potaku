@@ -1,8 +1,12 @@
 import * as cheerio from 'cheerio';
 
 type ScrapedAnime = {
-  anime_title: string
-  anime_img: string | undefined
+  title: {
+    romaji: string
+  }
+  coverImage: {
+    default: string | undefined
+  }
 }
 
 async function execute(page: number | string = 1) {
@@ -17,8 +21,12 @@ async function execute(page: number | string = 1) {
 
   $('div.last_episodes > ul > li').each((i, el) => {
     animes.push({
-      anime_title: $(el).find('p.name > a').text(),
-      anime_img: $(el).find('div > a > img').attr('src'),
+      title: {
+        romaji: $(el).find('p.name > a').text()
+      },
+      coverImage: {
+        default: $(el).find('div > a > img').attr('src')
+      },
     });
   });
 
