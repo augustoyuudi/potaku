@@ -1,7 +1,7 @@
 import MediaRepository from '../repository/MediaRepository';
 import getMediaById from './getMediaById';
 
-export default async function getMediaCharacter(query) {
+async function execute(query) {
   const data = await getMediaById(query, MediaRepository);
 
   if (!data) {
@@ -10,3 +10,5 @@ export default async function getMediaCharacter(query) {
 
   return data.Media.characters.edges;
 }
+
+export default execute;

@@ -1,5 +1,7 @@
 import MediaRepository from 'core/repository/MediaRepository'
 
-export default function getPaginatedMedia(query) {
+function execute(query) {
   return MediaRepository.getPaginatedMedia(query)
 }
+
+export default execute;

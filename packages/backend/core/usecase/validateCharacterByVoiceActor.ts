@@ -1,6 +1,6 @@
 import getCharacterById from './getCharacterById';
 
-export default async function validateCharacterByVoiceActor({ voiceActorId, characterId }: {voiceActorId: string | number, characterId: string | number}) {
+async function execute({ voiceActorId, characterId }: {voiceActorId: string | number, characterId: string | number}) {
   const { Character } = await getCharacterById({
     id: characterId,
     onList: false,
@@ -16,3 +16,5 @@ export default async function validateCharacterByVoiceActor({ voiceActorId, char
 
   return false;
 }
+
+export default execute;

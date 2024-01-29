@@ -1,7 +1,7 @@
 import getRandomizedMediaCharacter from './getRandomizedMediaCharacter';
 import getRandomizedVoiceActors from './getRandomizedMediaVoiceActors';
 
-export default async function createCharacterAndVoiceActorQuiz(query) {
+async function execute(query) {
   const character = await getRandomizedMediaCharacter({
     ...query,
     id: query.mediaId
@@ -29,3 +29,5 @@ export default async function createCharacterAndVoiceActorQuiz(query) {
     voiceActors
   }
 }
+
+export default execute;

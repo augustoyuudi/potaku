@@ -1,6 +1,6 @@
 import MediaRepository from '../repository/MediaRepository';
 
-export default async function getMediaVoiceActors(query) {
+async function execute(query) {
   const data = await MediaRepository.getMediaById(query);
 
   const voiceActors = data.Media.characters.edges.map((edge) => {
@@ -9,3 +9,5 @@ export default async function getMediaVoiceActors(query) {
 
   return voiceActors;
 }
+
+export default execute;

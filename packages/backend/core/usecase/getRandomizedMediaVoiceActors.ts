@@ -1,7 +1,7 @@
 import { fisherYatesShuffle } from 'foundation'
 import getMediaVoiceActors from './getMediaVoiceActors';
 
-export default async function getRandomizedMediaVoiceActors(query) {
+async function execute(query) {
   const voiceActors = await getMediaVoiceActors(query);
 
   const { size } = query;
@@ -10,3 +10,5 @@ export default async function getRandomizedMediaVoiceActors(query) {
 
   return shuffledResult.slice(0, size);
 }
+
+export default execute;

@@ -1,5 +1,7 @@
 import CharacterRepository from '../repository/CharacterRepository';
 
-export default function getCharacterById(query) {
+function execute(query) {
   return CharacterRepository.getCharacterById(query);
 }
+
+export default execute;
