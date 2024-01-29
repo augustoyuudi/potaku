@@ -3,6 +3,7 @@ import getPaginatedMedia from 'core/usecase/getPaginatedMedia';
 import getMediaById from 'core/usecase/getMediaById';
 import getRandomizedMediaCharacter from 'core/usecase/getRandomizedMediaCharacter';
 import getRandomizedMediaVoiceActors from 'core/usecase/getRandomizedMediaVoiceActors';
+import getPopularAnimes from 'core/usecase/getPopularAnimes';
 
 const router = express.Router();
 
@@ -64,6 +65,12 @@ router.get('/media/voice-actors/randomized', async (req, res) => {
   const voiceActors = await getRandomizedMediaVoiceActors(req.body);
 
   res.send(voiceActors);
+});
+
+router.get('/media/popular', async (req, res) => {
+  const animes = await getPopularAnimes();
+
+  res.send(animes);
 });
 
 export default router;
