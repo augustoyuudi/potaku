@@ -1,13 +1,16 @@
 <template>
   <main class="flex flex-col items-center justify-center p-2">
-    <section class="flex items-center gap-x-2 mb-4">
+    <section class="flex flex-col items-center gap-x-2 mb-4 w-full">
       <button
         v-if="hasSelectedAnime"
         class="i-carbon-arrow-left text-xl text-purple-800"
         data-testid="reset-anime"
         @click="resetSelectedAnime"
       ></button>
-      <form class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10" action="va-quiz">
+      <form
+        class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10 mb-4"
+        action="va-quiz"
+      >
         <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
         <input
           id="searchAnime"
@@ -25,6 +28,31 @@
           k
         </span>
       </form>
+      <base-swiper
+        v-if="popularAnimes.length"
+        class="w-full"
+        :slides-per-view="5"
+        :space-between="10"
+        :autoplay="{ delay: 3500 }"
+        :grid="{ rows: 2, fill: 'row' }"
+      >
+        <template #slides>
+          <swiper-slide
+            v-for="anime in popularAnimes"
+            :key="anime.title.romaji"
+            class="flex flex-col items-center"
+          >
+            <img
+              class="h-80"
+              :src="anime.coverImage.default"
+              :alt="`${anime.title} cover image.`"
+            >
+            <p class="text-center">
+              {{ anime.title.romaji }}
+            </p>
+          </swiper-slide>
+        </template>
+      </base-swiper>
     </section>
     <section v-show="!hasSelectedAnime && animes.length">
       <ul class="flex flex-wrap justify-center gap-2 mb-2">
@@ -101,12 +129,15 @@
 import type { Ref } from 'vue'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import debounce from 'lodash.debounce'
+import { SwiperSlide } from 'swiper/vue'
+import BaseSwiper from '@/components/BaseSwiper.vue'
 import BasePagination from '@/components/BasePagination.vue'
 import type { Character, Media, PageInfo } from '@/types'
 import { queryPaginatedMedia } from '@/api/MediaQueries'
 
 onMounted(() => {
   window.addEventListener('keydown', shortcutListener)
+  getPopularAnimes()
 })
 
 onUnmounted(() => {
@@ -115,6 +146,7 @@ onUnmounted(() => {
 
 const animeSearch = ref()
 const animeName = ref()
+const popularAnimes: Ref<Media[]> = ref([])
 const animes: Ref<Media[]> = ref([])
 const selectedAnime = ref()
 const page: Ref<PageInfo> = ref({
@@ -149,6 +181,11 @@ async function searchAnime(searchPage = 1) {
   animes.value = media
   page.value = pageInfo
   resetSelectedAnime()
+}
+
+async function getPopularAnimes() {
+  const data = await fetch(`${import.meta.env.VITE_BASE_URL}/media/popular`)
+  popularAnimes.value = await data.json()
 }
 
 function resetSelectedAnime() {

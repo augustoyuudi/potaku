@@ -5,5 +5,6 @@ export default interface Media {
   }
   coverImage: {
     large: string
+    default: string
   }
 }
