@@ -1,14 +1,14 @@
 <template>
   <main class="flex flex-col items-center justify-center p-2">
-    <section class="flex flex-col items-center gap-x-2 mb-4 w-full">
+    <section class="flex items-center gap-x-2 mb-4">
       <button
-        v-if="hasSelectedAnime"
+        v-show="hasSelectedAnime"
         class="i-carbon-arrow-left text-xl text-purple-800"
         data-testid="reset-anime"
         @click="resetSelectedAnime"
       ></button>
       <form
-        class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10 mb-4"
+        class="flex items-center gap-x-2 b b-amber-400 rounded-md px-2 py-1 h-10"
         action="va-quiz"
       >
         <label class="i-carbon-search text-purple-800 text-2xl" for="searchAnime"></label>
@@ -28,19 +28,64 @@
           k
         </span>
       </form>
+    </section>
+    <section v-show="!hasSelectedAnime && animes.length">
+      <ul class="flex flex-wrap justify-center gap-2 mb-2">
+        <li
+          v-for="anime in animes"
+          :key="anime.id"
+          class="cursor-pointer"
+          @click="setupGame(anime.id)"
+        >
+          <img class="max-w-56" :src="anime.coverImage.large" :alt="anime.title.romaji">
+        </li>
+      </ul>
+      <BasePagination :page="page" @change="searchAnime" />
+    </section>
+    <section
+      v-show="popularAnimes.length && !animes.length && !hasSelectedAnime"
+      class="w-full"
+    >
       <base-swiper
-        v-if="popularAnimes.length"
         class="w-full"
-        :slides-per-view="5"
         :space-between="10"
-        :autoplay="{ delay: 3500 }"
-        :grid="{ rows: 2, fill: 'row' }"
+        :navigation="true"
+        :breakpoints="{
+          '640': {
+            slidesPerView: 2,
+            grid: {
+              rows: 1
+            }
+          },
+          '768': {
+            slidesPerView: 3,
+            grid: {
+              rows: 2,
+              fill: 'row'
+            }
+          },
+          '1024': {
+            slidesPerView: 5,
+            grid: {
+              rows: 2,
+              fill: 'row'
+            }
+          },
+          '1920': {
+            slidesPerView: 7,
+            grid: {
+              rows: 2,
+              fill: 'row'
+            }
+          },
+        }"
       >
         <template #slides>
           <swiper-slide
             v-for="anime in popularAnimes"
             :key="anime.title.romaji"
-            class="flex flex-col items-center"
+            class="flex flex-col items-center cursor-pointer"
+            @click="selectPopularAnime(anime.title.romaji)"
           >
             <img
               class="h-80"
@@ -53,19 +98,6 @@
           </swiper-slide>
         </template>
       </base-swiper>
-    </section>
-    <section v-show="!hasSelectedAnime && animes.length">
-      <ul class="flex flex-wrap justify-center gap-2 mb-2">
-        <li
-          v-for="anime in animes"
-          :key="anime.id"
-          class="cursor-pointer"
-          @click="setupGame(anime.id)"
-        >
-          <img class="w-28" :src="anime.coverImage.large" :alt="anime.title.romaji">
-        </li>
-      </ul>
-      <BasePagination :page="page" @change="searchAnime" />
     </section>
     <form
       v-if="character"
@@ -249,5 +281,21 @@ function validateSelectedVA(va: number) {
   if (isAnswerCorrect.value === false) {
     return 'border-6 border-rose-600'
   }
+}
+
+async function selectPopularAnime(anime: string) {
+  const sanitizedAnimeName = anime.split(' ').slice(0, 2).join(' ')
+  const variables = {
+    search: sanitizedAnimeName,
+    page: 1,
+    perPage: 10,
+    type: 'ANIME',
+  }
+  const { data: { Page: { media, pageInfo } } } = await queryPaginatedMedia(variables)
+
+  animes.value = media
+  animeName.value = sanitizedAnimeName
+  page.value = pageInfo
+  resetSelectedAnime()
 }
 </script>
