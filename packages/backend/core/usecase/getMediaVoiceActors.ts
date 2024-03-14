@@ -1,9 +1,14 @@
 import MediaRepository from '../repository/MediaRepository';
+import type { Query } from '../types/query.types';
 
-async function execute(query) {
+type Edge = {
+  voiceActors: { [key: string]: string }[]
+}
+
+async function execute(query: Query) {
   const data = await MediaRepository.getMediaById(query);
 
-  const voiceActors = data.Media.characters.edges.map((edge) => {
+  const voiceActors = data.Media.characters.edges.map((edge: Edge) => {
     return edge.voiceActors[0];
   });
 

@@ -12,7 +12,7 @@ Entertainment for otakus
 
 <br>
 <p align="center">
-<a href="https://potaku.netlify.app/">🧑‍💻 Website <sup>Alfa</sup></a>
+<a href="https://potaku-client.onrender.com">🧑‍💻 Website <sup>Alfa</sup></a>
 </p>
 <br>
 

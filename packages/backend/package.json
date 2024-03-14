@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "dev": "tsx watch server.ts"
+    "dev": "tsx watch server.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +15,7 @@
     "@urql/core": "^4.2.1",
     "cheerio": "1.0.0-rc.12",
     "cors": "^2.8.5",
-    "express": "^4.18.2",
-    "foundation": "workspace:^"
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

@@ -1,7 +1,8 @@
 import getRandomizedMediaCharacter from './getRandomizedMediaCharacter';
 import getRandomizedVoiceActors from './getRandomizedMediaVoiceActors';
+import type { Query } from '../types/query.types';
 
-async function execute(query) {
+async function execute(query: Query) {
   const character = await getRandomizedMediaCharacter({
     ...query,
     id: query.mediaId

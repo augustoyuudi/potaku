@@ -1,6 +1,7 @@
 import UrqlClient from '../../infra/database/urql';
+import type { Query } from '../types/query.types';
 
-async function getPaginatedMedia(variables, db = UrqlClient) {
+async function getPaginatedMedia(variables: Query, db = UrqlClient) {
   // client should send this query
   const query = `
     query getPaginatedMedia ($page: Int, $perPage: Int, $search: String, $type: MediaType) {
@@ -30,7 +31,7 @@ async function getPaginatedMedia(variables, db = UrqlClient) {
   return result.data;
 };
 
-async function getMediaById(variables, db = UrqlClient) {
+async function getMediaById(variables: Query, db = UrqlClient) {
   const query = `
     query getMediaById ($id: Int, $sort: [CharacterSort], $page: Int, $perPage: Int) {
       Media (id: $id) {

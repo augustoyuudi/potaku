@@ -1,7 +1,8 @@
 import MediaRepository from '../repository/MediaRepository';
 import getMediaById from './getMediaById';
+import type { Query } from '../types/query.types';
 
-async function execute(query) {
+async function execute(query: Query) {
   const data = await getMediaById(query, MediaRepository);
 
   if (!data) {

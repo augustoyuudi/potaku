@@ -1,7 +1,20 @@
-import { fisherYatesShuffle } from 'foundation'
 import getMediaVoiceActors from './getMediaVoiceActors';
+import type { Query } from '../types/query.types';
 
-async function execute(query) {
+function fisherYatesShuffle(arr: any[]) {
+  const array = [...arr]
+  let i: number = array.length || 0
+  let j = 0
+
+  while (i--) {
+    j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]]
+  }
+
+  return array
+}
+
+async function execute(query: Query) {
   const voiceActors = await getMediaVoiceActors(query);
 
   const { size } = query;

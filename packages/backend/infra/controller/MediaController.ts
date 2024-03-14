@@ -1,9 +1,9 @@
 import express from 'express';
-import getPaginatedMedia from 'core/usecase/getPaginatedMedia';
-import getMediaById from 'core/usecase/getMediaById';
-import getRandomizedMediaCharacter from 'core/usecase/getRandomizedMediaCharacter';
-import getRandomizedMediaVoiceActors from 'core/usecase/getRandomizedMediaVoiceActors';
-import getPopularAnimes from 'core/usecase/getPopularAnimes';
+import getPaginatedMedia from '../../core/usecase/getPaginatedMedia';
+import getMediaById from '../../core/usecase/getMediaById';
+import getRandomizedMediaCharacter from '../../core/usecase/getRandomizedMediaCharacter';
+import getRandomizedMediaVoiceActors from '../../core/usecase/getRandomizedMediaVoiceActors';
+import getPopularAnimes from '../../core/usecase/getPopularAnimes';
 
 const router = express.Router();
 

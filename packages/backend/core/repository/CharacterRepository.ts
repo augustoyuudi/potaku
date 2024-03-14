@@ -1,6 +1,7 @@
 import UrqlClient from '../../infra/database/urql';
+import type { Query } from '../types/query.types';
 
-async function getCharacterById(variables, db = UrqlClient) {
+async function getCharacterById(variables: Query, db = UrqlClient) {
   // client should send this query
   const query = `
     query character(
