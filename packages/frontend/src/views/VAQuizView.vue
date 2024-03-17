@@ -236,7 +236,7 @@ async function getQuizGameData(id?: number) {
     id = selectedAnime.value
   }
 
-  const data = await fetch('http://localhost:3000/game/quiz/character-va', {
+  const data = await fetch(`${import.meta.env.VITE_BASE_URL}/game/quiz/character-va`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
