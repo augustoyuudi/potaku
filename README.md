@@ -12,7 +12,7 @@ Entertainment for otakus
 
 <br>
 <p align="center">
-<a href="https://potaku-client.onrender.com">🧑‍💻 Website <sup>Alfa</sup></a>
+<s><a href="https://potaku-client.onrender.com">🧑‍💻 Website <sup>Shutdown</sup></a></s>
 </p>
 <br>
 
@@ -22,13 +22,29 @@ Fetching resources from [AniList](https://anilist.gitbook.io/anilist-apiv2-docs/
 
 - Guess the VA: game where player guess the correct VA for an anime character.
 
-## Acknowledgement
+## Project overview
 
-- [Vue.js](https://vuejs.org/)
-- [UnoCSS](https://github.com/unocss/unocss)
-- [Vue Apollo](https://apollo.vuejs.org/)
-- [Vite](https://vitejs.dev/)
-- [Netlify](https://www.netlify.com/)
+This monorepo contains both the client-side and server-side applications, built with TypeScript.
+The monorepo is handled by [pnpm workspaces](https://pnpm.io/workspaces)
+
+### Server
+The server is built with [Express.js](https://expressjs.com/).
+
+To start the server:
+```bash
+cd packages/backend
+pnpm install
+pnpm dev
+```
+
+The client is built with [Vue.js](https://vuejs.org/).
+
+To start the client:
+```bash
+cd packages/frontend
+pnpm install
+pnpm dev
+```
 
 ## Tasks
 
